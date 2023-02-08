@@ -1,0 +1,27 @@
+GET http://localhost:3000/item-types
+
+###
+
+GET http://localhost:3000/item-types/2
+
+###
+
+POST http://localhost:3000/item-types/
+Content-Type: application/json
+
+{
+  "name": "eees"
+}
+
+###
+
+PUT http://localhost:3000/item-types/2
+Content-Type: application/json
+
+{
+  "name": "aaa"
+}
+
+###
+
+DELETE http://localhost:3000/item-types/3
