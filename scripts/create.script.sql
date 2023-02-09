@@ -2,7 +2,17 @@
 
 DROP TABLE IF EXISTS items;
 DROP TABLE IF EXISTS item_types;
+DROP TABLE IF EXISTS users;
 
+
+CREATE TABLE IF NOT EXISTS users (
+  user_id INT AUTO_INCREMENT,
+  firstname VARCHAR(50),
+  lastname VARCHAR(50),
+  email VARCHAR(255),
+  password VARCHAR(24),
+  PRIMARY KEY(user_id)
+);
 
 CREATE TABLE IF NOT EXISTS item_types (
   item_type_id INT AUTO_INCREMENT,

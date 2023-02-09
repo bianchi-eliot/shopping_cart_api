@@ -1,5 +1,11 @@
 /* source Documents/project/shopping_cart_app/api/scripts/insert.script.sql */
 
+INSERT INTO users(user_id, firstname, lastname, email, password)
+VALUES
+  (DEFAULT, 'Scott', 'BYRD', 'scottbyrd@armyspy.com', 'ge2i$g9Ine'),
+  (DEFAULT, 'Anna', 'DUBOIS', 'annadubois@rhyta.com', 'ia5ahY_woh'),
+  (DEFAULT, 'Todd', 'Pollard', 'toddpollard@gmail.com', 'Ae[h4ieNooc');
+
 INSERT INTO item_types(item_type_id, name)
 VALUES 
   (DEFAULT, 'Electronic'),

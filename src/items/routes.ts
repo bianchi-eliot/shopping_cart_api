@@ -1,5 +1,11 @@
 import { Router } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
-import { getAllItems, getSingleItems, addItems, updateItems, deleteItems } from './controllers.ts'
+import {
+	addItems,
+	deleteItems,
+	getAllItems,
+	getSingleItems,
+	updateItems,
+} from './controllers.ts'
 
 const router = new Router()
 

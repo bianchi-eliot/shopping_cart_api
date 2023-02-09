@@ -1,0 +1,42 @@
+GET http://localhost:3000/users
+
+###
+
+GET http://localhost:3000/users/3
+
+###
+
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "firstname": "Pomme",
+  "lastname": "Depice",
+  "email": "pommedepice@gmail.com",
+  "password": "aoh3_Oo2Z"
+}
+
+###
+
+PUT http://localhost:3000/users/3
+Content-Type: application/json
+
+{
+  "firstname": "Ae[h4ieNooc",
+  "lastname": "test2",
+  "email": "test3@gmail.com"
+}
+
+###
+
+PATCH http://localhost:3000/users/3
+Content-Type: application/json
+
+{
+  "former_password": "12dz9ç",
+  "new_password": "asc"
+}
+
+###
+
+DELETE http://localhost:3000/users/1

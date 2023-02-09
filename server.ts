@@ -1,9 +1,13 @@
 import { Application } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
+import usersRoutes from './src/users/routes.ts'
 import itemTypesRoutes from './src/item_types/routes.ts'
 import itemsRoutes from './src/items/routes.ts'
 import rootRoutes from './src/root/routes.ts'
 
 const app = new Application()
+
+app.use(usersRoutes.routes())
+app.use(usersRoutes.allowedMethods())
 
 app.use(itemTypesRoutes.routes())
 app.use(itemTypesRoutes.allowedMethods())

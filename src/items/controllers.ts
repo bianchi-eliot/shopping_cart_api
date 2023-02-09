@@ -5,7 +5,7 @@ import {
 } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import ItemTypesClass from '../item_types/models.ts'
 import ItemsClass from './models.ts'
-import { ItemTypes, Items } from '../../types/index.ts'
+import { Items, ItemTypes } from '../../types/index.ts'
 
 type RContext = RouterContext<
 	'/items/:id',
@@ -50,14 +50,27 @@ export async function addItems(ctx: Context) {
 		const value = await bodyReq.value
 		const { name, quantity, image_url, item_type_id } = value
 
-		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(item_type_id)
+		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(
+			item_type_id,
+		)
 		if (itemType.length === 0) {
 			return ctx.response.status = Status.BadRequest
 		}
-		const result = await ItemsClass.addItems(name, quantity, image_url, item_type_id)
+		const result = await ItemsClass.addItems(
+			name,
+			quantity,
+			image_url,
+			item_type_id,
+		)
 		ctx.response.status = Status.Created
-		ctx.response.body = { id: result.lastInsertId, name, quantity, image_url, item_type_id }
-	} catch(err) {
+		ctx.response.body = {
+			id: result.lastInsertId,
+			name,
+			quantity,
+			image_url,
+			item_type_id,
+		}
+	} catch (err) {
 		console.log(`Error : ${err}`)
 		ctx.response.status = Status.InternalServerError
 	}
@@ -70,13 +83,15 @@ export async function updateItems(ctx: RContext) {
 		const value = await bodyReq.value
 		const { name, quantity, image_url, item_type_id } = value
 
-		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(item_type_id)
+		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(
+			item_type_id,
+		)
 		if (itemType.length === 0) {
 			return ctx.response.status = Status.BadRequest
 		}
 		await ItemsClass.updateItems(id, name, quantity, image_url, item_type_id)
 		ctx.response.status = Status.NoContent
-	} catch(err) {
+	} catch (err) {
 		console.log(`Error : ${err}`)
 		ctx.response.status = Status.InternalServerError
 	}
@@ -87,7 +102,7 @@ export async function deleteItems(ctx: RContext) {
 		const id = parseInt(ctx.params.id)
 		await ItemsClass.deleteItems(id)
 		ctx.response.status = Status.NoContent
-	} catch(err) {
+	} catch (err) {
 		console.log(`Error : ${err}`)
 		ctx.response.status = Status.InternalServerError
 	}

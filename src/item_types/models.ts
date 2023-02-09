@@ -19,7 +19,7 @@ class ItemTypesClass {
 
 	static async addItemTypes(name: string) {
 		const result = await db.execute(
-			`INSERT INTO item_types(item_type_id, name) values(DEFAULT, ?)`,
+			`INSERT INTO item_types(item_type_id, name) VALUES(DEFAULT, ?)`,
 			[name],
 		)
 		return result

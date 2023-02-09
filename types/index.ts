@@ -1,10 +1,18 @@
+export type Users = {
+	user_id: number
+	firstname: string
+	lastname: string
+	email: string
+	password: string
+}
+
 export type ItemTypes = {
-	id: number
+	item_type_id: number
 	name: string
 }
 
 export type Items = {
-	id: number
+	item_id: number
 	name: string
 	quantity: number
 	image_url: string
