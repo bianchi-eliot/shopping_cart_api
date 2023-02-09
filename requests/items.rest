@@ -1,0 +1,33 @@
+GET http://localhost:3000/items
+
+###
+
+GET http://localhost:3000/items/2
+
+###
+
+POST http://localhost:3000/items
+Content-Type: application/json
+
+{
+  "name": "test",
+  "quantity": 13,
+  "image_url": "test.jpg",
+  "item_type_id": 222
+}
+
+###
+
+PUT http://localhost:3000/items/2
+Content-Type: application/json
+
+{
+  "name": "aaa",
+  "quantity": 222,
+  "image_url": "aaa.jpg",
+  "item_type_id": 33
+}
+
+###
+
+DELETE http://localhost:3000/items/2

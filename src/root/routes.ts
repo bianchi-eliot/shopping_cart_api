@@ -1,13 +1,10 @@
 import { Context, Router, Status } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
-import db from '../../helpers/db.ts'
 
 const router = new Router()
 
-router.get('/', async (ctx: Context) => {
+router.get('/', (ctx: Context) => {
 	try {
 		ctx.response.status = Status.OK
-		await db.connect()
-		await db.end()
 		ctx.response.body = 'Hello World'
 	} catch (err) {
 		console.log('Error : ', err)

@@ -1,6 +1,17 @@
-import { Context, Status } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
+import {
+	Context,
+	RouterContext,
+	Status,
+} from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import ItemTypesClass from './models.ts'
-import { ItemTypes, RContext } from '../../types/index.ts'
+import ItemsClass from '../items/models.ts'
+import { ItemTypes } from '../../types/index.ts'
+
+export type RContext = RouterContext<
+	'/item-types/:id',
+	{ id: string } & Record<string | number, string | undefined>,
+	Record<string, unknown>
+>
 
 export async function getAllItemTypes(ctx: Context) {
 	try {
@@ -19,6 +30,7 @@ export async function getAllItemTypes(ctx: Context) {
 
 export async function getSingleItemTypes(ctx: RContext) {
 	try {
+		if (ctx.params.id == undefined) return
 		const id = parseInt(ctx.params.id)
 		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(id)
 		if (itemType.length === 0) {
@@ -48,26 +60,27 @@ export async function addItemTypes(ctx: Context) {
 }
 
 export async function updateItemTypes(ctx: RContext) {
-  try {
-    const id = parseInt(ctx.params.id)
-    const body = ctx.request.body()
-    const value = await body.value
-    const name = value.name
-    await ItemTypesClass.updateItemTypes(id, name)
-    ctx.response.status = Status.NoContent
-  } catch(err) {
-    console.log(`Error : ${err}`)
+	try {
+		const id = parseInt(ctx.params.id)
+		const body = ctx.request.body()
+		const value = await body.value
+		const name = value.name
+		await ItemTypesClass.updateItemTypes(id, name)
+		ctx.response.status = Status.NoContent
+	} catch (err) {
+		console.log(`Error : ${err}`)
 		ctx.response.status = Status.InternalServerError
-  }
+	}
 }
 
 export async function deleteItemTypes(ctx: RContext) {
-  try {
-    const id = parseInt(ctx.params.id)
-    await ItemTypesClass.deleteItemTypes(id)
-    ctx.response.status = Status.NoContent
-  } catch(err) {
-    console.log(`Error : ${err}`)
-	  ctx.response.status = Status.InternalServerError
-  }
+	try {
+		const id = parseInt(ctx.params.id)
+		await ItemsClass.deleteItemsByForeignKey(id)
+		await ItemTypesClass.deleteItemTypes(id)
+		ctx.response.status = Status.NoContent
+	} catch (err) {
+		console.log(`Error : ${err}`)
+		ctx.response.status = Status.InternalServerError
+	}
 }
