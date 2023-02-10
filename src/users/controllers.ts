@@ -7,8 +7,8 @@ import UsersClass from './models.ts'
 import { Users } from '../../types/index.ts'
 
 type RContext = RouterContext<
-	'/users/:id',
-	{ id: string } & Record<string | number, string | undefined>,
+	'/users/:userId',
+	{ userId: string } & Record<string | number, string | undefined>,
 	Record<string, unknown>
 >
 
@@ -29,8 +29,8 @@ export async function getAllUsers(ctx: Context) {
 
 export async function getSingleUsers(ctx: RContext) {
 	try {
-		const id = parseInt(ctx.params.id)
-		const user: Users[] = await UsersClass.getSingleUsers(id)
+		const user_id = parseInt(ctx.params.userId)
+		const user: Users[] = await UsersClass.getSingleUsers(user_id)
 		if (user.length === 0) {
 			ctx.response.status = Status.NoContent
 		} else {
@@ -55,13 +55,7 @@ export async function addUsers(ctx: Context) {
 			password,
 		)
 		ctx.response.status = Status.Created
-		ctx.response.body = {
-			id: result.lastInsertId,
-			firstname,
-			lastname,
-			email,
-			password,
-		}
+		ctx.response.body = { user_id: result.lastInsertId }
 	} catch (err) {
 		console.log(`Error : ${err}`)
 		ctx.response.status = Status.InternalServerError
@@ -70,11 +64,11 @@ export async function addUsers(ctx: Context) {
 
 export async function updateUsers(ctx: RContext) {
 	try {
-		const id = parseInt(ctx.params.id)
+		const user_id = parseInt(ctx.params.userId)
 		const bodyReq = ctx.request.body()
 		const value = await bodyReq.value
 		const { firstname, lastname, email } = value
-		await UsersClass.updateUsers(id, firstname, lastname, email)
+		await UsersClass.updateUsers(user_id, firstname, lastname, email)
 		ctx.response.status = Status.NoContent
 	} catch (err) {
 		console.log(`Error : ${err}`)
@@ -84,12 +78,12 @@ export async function updateUsers(ctx: RContext) {
 
 export async function updateUsersPassword(ctx: RContext) {
 	try {
-		const id = parseInt(ctx.params.id)
+		const user_id = parseInt(ctx.params.userId)
 		const bodyReq = ctx.request.body()
 		const value = await bodyReq.value
 		const { former_password, new_password } = value
 		const result = await UsersClass.updateUsersPassword(
-			id,
+			user_id,
 			former_password,
 			new_password,
 		)
@@ -106,8 +100,8 @@ export async function updateUsersPassword(ctx: RContext) {
 
 export async function deleteUsers(ctx: RContext) {
 	try {
-		const id = parseInt(ctx.params.id)
-		await UsersClass.deleteUsers(id)
+		const user_id = parseInt(ctx.params.userId)
+		await UsersClass.deleteUsers(user_id)
 		ctx.response.status = Status.NoContent
 	} catch (err) {
 		console.log(`Error : ${err}`)

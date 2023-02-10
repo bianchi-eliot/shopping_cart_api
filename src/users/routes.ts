@@ -12,14 +12,14 @@ const router = new Router()
 
 router.get('/users', getAllUsers)
 
-router.get('/users/:id', getSingleUsers)
+router.get('/users/:userId', getSingleUsers)
 
 router.post('/users', addUsers)
 
-router.put('/users/:id', updateUsers)
+router.put('/users/:userId', updateUsers)
 
-router.patch('/users/:id', updateUsersPassword)
+router.patch('/users/:userId', updateUsersPassword)
 
-router.delete('/users/:id', deleteUsers)
+router.delete('/users/:userId', deleteUsers)
 
 export default router

@@ -4,12 +4,11 @@ import {
 	Status,
 } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import ItemTypesClass from './models.ts'
-import ItemsClass from '../items/models.ts'
 import { ItemTypes } from '../../types/index.ts'
 
 export type RContext = RouterContext<
-	'/item-types/:id',
-	{ id: string } & Record<string | number, string | undefined>,
+	'/item-types/:itemTypeId',
+	{ itemTypeId: string } & Record<string | number, string | undefined>,
 	Record<string, unknown>
 >
 
@@ -30,9 +29,10 @@ export async function getAllItemTypes(ctx: Context) {
 
 export async function getSingleItemTypes(ctx: RContext) {
 	try {
-		if (ctx.params.id == undefined) return
-		const id = parseInt(ctx.params.id)
-		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(id)
+		const item_type_id = parseInt(ctx.params.itemTypeId)
+		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(
+			item_type_id,
+		)
 		if (itemType.length === 0) {
 			ctx.response.status = Status.NoContent
 		} else {
@@ -52,7 +52,7 @@ export async function addItemTypes(ctx: Context) {
 		const name = value.name
 		const result = await ItemTypesClass.addItemTypes(name)
 		ctx.response.status = Status.Created
-		ctx.response.body = { id: result.lastInsertId, name }
+		ctx.response.body = { item_type_id: result.lastInsertId }
 	} catch (err) {
 		console.log(`Error : ${err}`)
 		ctx.response.status = Status.InternalServerError
@@ -61,11 +61,11 @@ export async function addItemTypes(ctx: Context) {
 
 export async function updateItemTypes(ctx: RContext) {
 	try {
-		const id = parseInt(ctx.params.id)
+		const item_type_id = parseInt(ctx.params.itemTypeId)
 		const body = ctx.request.body()
 		const value = await body.value
 		const name = value.name
-		await ItemTypesClass.updateItemTypes(id, name)
+		await ItemTypesClass.updateItemTypes(item_type_id, name)
 		ctx.response.status = Status.NoContent
 	} catch (err) {
 		console.log(`Error : ${err}`)
@@ -75,9 +75,8 @@ export async function updateItemTypes(ctx: RContext) {
 
 export async function deleteItemTypes(ctx: RContext) {
 	try {
-		const id = parseInt(ctx.params.id)
-		await ItemsClass.deleteItemsByForeignKey(id)
-		await ItemTypesClass.deleteItemTypes(id)
+		const item_type_id = parseInt(ctx.params.itemTypeId)
+		await ItemTypesClass.deleteItemTypes(item_type_id)
 		ctx.response.status = Status.NoContent
 	} catch (err) {
 		console.log(`Error : ${err}`)

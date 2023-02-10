@@ -9,11 +9,11 @@ class UsersClass {
 		return users
 	}
 
-	static async getSingleUsers(id: number) {
+	static async getSingleUsers(user_id: number) {
 		const user: Users[] = await db.query(
 			`SELECT user_id, firstname, lastname, email FROM users
        WHERE user_id = ?`,
-			[id],
+			[user_id],
 		)
 		return user
 	}
@@ -33,7 +33,7 @@ class UsersClass {
 	}
 
 	static async updateUsers(
-		id: number,
+		user_id: number,
 		firstname: string,
 		lastname: string,
 		email: string,
@@ -41,27 +41,27 @@ class UsersClass {
 		await db.execute(
 			`UPDATE users SET firstname = ?, lastname = ?, email = ?
        WHERE user_id = ?`,
-			[firstname, lastname, email, id],
+			[firstname, lastname, email, user_id],
 		)
 	}
 
 	static async updateUsersPassword(
-		id: number,
+		user_id: number,
 		former_password: string,
 		new_password: string,
 	) {
 		const result = await db.execute(
 			`UPDATE users SET password = ?
        WHERE user_id = ? AND password = ?`,
-			[new_password, id, former_password],
+			[new_password, user_id, former_password],
 		)
 		return result
 	}
 
-	static async deleteUsers(id: number) {
+	static async deleteUsers(user_id: number) {
 		await db.execute(
 			`DELETE FROM users WHERE user_id = ?`,
-			[id],
+			[user_id],
 		)
 	}
 }

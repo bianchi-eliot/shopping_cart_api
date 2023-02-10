@@ -11,12 +11,12 @@ const router = new Router()
 
 router.get('/items', getAllItems)
 
-router.get('/items/:id', getSingleItems)
+router.get('/items/:itemId', getSingleItems)
 
 router.post('/items', addItems)
 
-router.put('/items/:id', updateItems)
+router.put('/items/:itemId', updateItems)
 
-router.delete('/items/:id', deleteItems)
+router.delete('/items/:itemId', deleteItems)
 
 export default router

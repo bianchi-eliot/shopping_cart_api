@@ -9,10 +9,10 @@ class ItemTypesClass {
 		return itemTypes
 	}
 
-	static async getSingleItemTypes(id: number) {
+	static async getSingleItemTypes(item_type_id: number) {
 		const itemType: ItemTypes[] = await db.query(
 			`SELECT item_type_id, name FROM item_types WHERE item_type_id = ?`,
-			[id],
+			[item_type_id],
 		)
 		return itemType
 	}
@@ -25,17 +25,17 @@ class ItemTypesClass {
 		return result
 	}
 
-	static async updateItemTypes(id: number, name: string) {
+	static async updateItemTypes(item_type_id: number, name: string) {
 		await db.execute(
 			`UPDATE item_types SET name = ? WHERE item_type_id = ?`,
-			[name, id],
+			[name, item_type_id],
 		)
 	}
 
-	static async deleteItemTypes(id: number) {
+	static async deleteItemTypes(item_type_id: number) {
 		await db.execute(
 			`DELETE FROM item_types WHERE item_type_id = ?`,
-			[id],
+			[item_type_id],
 		)
 	}
 }

@@ -1,0 +1,18 @@
+GET http://localhost:3000/carts
+
+###
+
+GET http://localhost:3000/carts/1
+
+###
+
+POST http://localhost:3000/carts
+Content-Type: application/json
+
+{
+  "user_id": 2
+}
+
+###
+
+DELETE http://localhost:3000/carts/3

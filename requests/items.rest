@@ -13,7 +13,7 @@ Content-Type: application/json
   "name": "test",
   "quantity": 13,
   "image_url": "test.jpg",
-  "item_type_id": 222
+  "item_type_id": 2
 }
 
 ###
@@ -25,9 +25,9 @@ Content-Type: application/json
   "name": "aaa",
   "quantity": 222,
   "image_url": "aaa.jpg",
-  "item_type_id": 33
+  "item_type_id": 2
 }
 
 ###
 
-DELETE http://localhost:3000/items/2
+DELETE http://localhost:3000/items/1

@@ -11,12 +11,12 @@ const router = new Router()
 
 router.get('/item-types', getAllItemTypes)
 
-router.get('/item-types/:id', getSingleItemTypes)
+router.get('/item-types/:itemTypeId', getSingleItemTypes)
 
 router.post('/item-types', addItemTypes)
 
-router.put('/item-types/:id', updateItemTypes)
+router.put('/item-types/:itemTypeId', updateItemTypes)
 
-router.delete('/item-types/:id', deleteItemTypes)
+router.delete('/item-types/:itemTypeId', deleteItemTypes)
 
 export default router
