@@ -1,23 +1,23 @@
 import db from '../../helpers/db.ts'
-import { Carts } from '../../types/index.ts'
+import { Cart } from '../../types/index.ts'
 
-class CartsClass {
-	static async getAllCarts() {
-		const carts: Carts[] = await db.query(
+class Carts {
+	static async getCarts() {
+		const carts: Cart[] = await db.query(
 			`SELECT cart_id, user_id FROM carts`,
 		)
 		return carts
 	}
 
-	static async getSingleCarts(user_id: number) {
-		const cart: Carts[] = await db.query(
+	static async getCart(user_id: number) {
+		const cart: Cart[] = await db.query(
 			`SELECT cart_id FROM carts WHERE user_id = ?`,
 			[user_id],
 		)
 		return cart
 	}
 
-	static async addCarts(user_id: number) {
+	static async addCart(user_id: number) {
 		const result = await db.execute(
 			`INSERT INTO carts(cart_id, user_id) VALUES(DEFAULT, ?)`,
 			[user_id],
@@ -25,7 +25,7 @@ class CartsClass {
 		return result
 	}
 
-	static async deleteCarts(cart_id: number) {
+	static async deleteCart(cart_id: number) {
 		await db.execute(
 			`DELETE FROM carts WHERE cart_id = ?`,
 			[cart_id],
@@ -33,4 +33,4 @@ class CartsClass {
 	}
 }
 
-export default CartsClass
+export default Carts

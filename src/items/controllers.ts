@@ -3,9 +3,9 @@ import {
 	RouterContext,
 	Status,
 } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
-import ItemTypesClass from '../item_types/models.ts'
-import ItemsClass from './models.ts'
-import { Items, ItemTypes } from '../../types/index.ts'
+import ItemTypes from '../item_types/models.ts'
+import Items from './models.ts'
+import { Item, ItemType } from '../../types/index.ts'
 
 type RContext = RouterContext<
 	'/items/:itemId',
@@ -13,9 +13,9 @@ type RContext = RouterContext<
 	Record<string, unknown>
 >
 
-export async function getAllItems(ctx: Context) {
+export async function getItems(ctx: Context) {
 	try {
-		const items: Items[] = await ItemsClass.getAllItems()
+		const items: Item[] = await Items.getItems()
 		if (items.length === 0) {
 			ctx.response.status = Status.NoContent
 		} else {
@@ -28,10 +28,10 @@ export async function getAllItems(ctx: Context) {
 	}
 }
 
-export async function getSingleItems(ctx: RContext) {
+export async function getItem(ctx: RContext) {
 	try {
 		const item_id = parseInt(ctx.params.itemId)
-		const item: Items[] = await ItemsClass.getSingleItems(item_id)
+		const item: Item[] = await Items.getItem(item_id)
 		if (item.length === 0) {
 			ctx.response.status = Status.NoContent
 		} else {
@@ -44,20 +44,21 @@ export async function getSingleItems(ctx: RContext) {
 	}
 }
 
-export async function addItems(ctx: Context) {
+export async function addItem(ctx: Context) {
 	try {
 		const bodyReq = ctx.request.body()
 		const value = await bodyReq.value
-		const { name, quantity, image_url, item_type_id } = value
+		const { name, price, quantity, image_url, item_type_id } = value
 
-		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(
+		const itemType: ItemType[] = await ItemTypes.getItemType(
 			item_type_id,
 		)
 		if (itemType.length === 0) {
 			return ctx.response.status = Status.BadRequest
 		}
-		const result = await ItemsClass.addItems(
+		const result = await Items.addItem(
 			name,
+			price,
 			quantity,
 			image_url,
 			item_type_id,
@@ -70,22 +71,23 @@ export async function addItems(ctx: Context) {
 	}
 }
 
-export async function updateItems(ctx: RContext) {
+export async function updateItem(ctx: RContext) {
 	try {
 		const item_id = parseInt(ctx.params.itemId)
 		const bodyReq = ctx.request.body()
 		const value = await bodyReq.value
-		const { name, quantity, image_url, item_type_id } = value
+		const { name, price, quantity, image_url, item_type_id } = value
 
-		const itemType: ItemTypes[] = await ItemTypesClass.getSingleItemTypes(
+		const itemType: ItemType[] = await ItemTypes.getItemType(
 			item_type_id,
 		)
 		if (itemType.length === 0) {
 			return ctx.response.status = Status.BadRequest
 		}
-		await ItemsClass.updateItems(
+		await Items.updateItem(
 			item_id,
 			name,
+			price,
 			quantity,
 			image_url,
 			item_type_id,
@@ -97,10 +99,10 @@ export async function updateItems(ctx: RContext) {
 	}
 }
 
-export async function deleteItems(ctx: RContext) {
+export async function deleteItem(ctx: RContext) {
 	try {
 		const item_id = parseInt(ctx.params.itemId)
-		await ItemsClass.deleteItems(item_id)
+		await Items.deleteItem(item_id)
 		ctx.response.status = Status.NoContent
 	} catch (err) {
 		console.log(`Error : ${err}`)

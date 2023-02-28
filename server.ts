@@ -9,6 +9,13 @@ import rootRoutes from './src/root/routes.ts'
 
 const app = new Application()
 
+app.use(async (ctx, next) => {
+  ctx.response.headers.set('Access-Control-Allow-Origin', 'http://localhost:5173')
+  ctx.response.headers.set('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE')
+  ctx.response.headers.set('Access-Control-Allow-Headets', 'Content-Type')
+  await next()
+})
+
 app.use(usersRoutes.routes())
 app.use(usersRoutes.allowedMethods())
 

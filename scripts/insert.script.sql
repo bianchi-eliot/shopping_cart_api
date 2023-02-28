@@ -18,14 +18,14 @@ VALUES
   (DEFAULT, 'Furniture'),
   (DEFAULT, 'Tools');
 
-INSERT INTO items(item_id, name, quantity, image_url, item_type_id)
+INSERT INTO items(item_id, name, price, quantity, image_url, item_type_id)
 VALUES
-  (DEFAULT, 'Computer', 5, 'computer.jpg', 1),
-  (DEFAULT, 'TV', 23, 'television.jpg', 1),
-  (DEFAULT, 'Chair', 12, 'chair.jpg', 2),
-  (DEFAULT, 'Table', 19, 'table.jpg', 2),
-  (DEFAULT, 'Screw', 98, 'screw.jpg', 3),
-  (DEFAULT, 'Screwdriver', 9, 'screwdriver.jpg', 3);
+  (DEFAULT, 'Computer', 1224.99, 5, 'computer.jpg', 1),
+  (DEFAULT, 'TV', 599.99, 23, 'television.jpg', 1),
+  (DEFAULT, 'Chair', 34.99, 12, 'chair.jpg', 2),
+  (DEFAULT, 'Table', 59.99, 19, 'table.jpg', 2),
+  (DEFAULT, 'Screw', 12.99, 98, 'screw.jpg', 3),
+  (DEFAULT, 'Screwdriver', 109.99, 9, 'screwdriver.jpg', 3);
 
 INSERT INTO cart_items(cart_id, item_id, quantity)
 VALUES

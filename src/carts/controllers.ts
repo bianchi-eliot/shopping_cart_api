@@ -3,8 +3,8 @@ import {
 	RouterContext,
 	Status,
 } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
-import CartsClass from './models.ts'
-import { Carts } from '../../types/index.ts'
+import Carts from './models.ts'
+import { Cart } from '../../types/index.ts'
 
 export type RContext = RouterContext<
 	'/carts/:cartId',
@@ -18,9 +18,9 @@ export type RContext2 = RouterContext<
 	Record<string, unknown>
 >
 
-export async function getAllCarts(ctx: Context) {
+export async function getCarts(ctx: Context) {
 	try {
-		const carts: Carts[] = await CartsClass.getAllCarts()
+		const carts: Cart[] = await Carts.getCarts()
 		if (carts.length === 0) {
 			ctx.response.status = Status.NoContent
 		} else {
@@ -33,10 +33,10 @@ export async function getAllCarts(ctx: Context) {
 	}
 }
 
-export async function getSingleCarts(ctx: RContext2) {
+export async function getCart(ctx: RContext2) {
 	try {
 		const user_id = parseInt(ctx.params.userId)
-		const cart: Carts[] = await CartsClass.getSingleCarts(user_id)
+		const cart: Cart[] = await Carts.getCart(user_id)
 		if (cart.length === 0) {
 			ctx.response.status = Status.NoContent
 		} else {
@@ -49,12 +49,12 @@ export async function getSingleCarts(ctx: RContext2) {
 	}
 }
 
-export async function addCarts(ctx: Context) {
+export async function addCart(ctx: Context) {
 	try {
 		const body = ctx.request.body()
 		const value = await body.value
 		const user_id = value.user_id
-		const result = await CartsClass.addCarts(user_id)
+		const result = await Carts.addCart(user_id)
 		ctx.response.status = Status.Created
 		ctx.response.body = { cart_id: result.lastInsertId }
 	} catch (err) {
@@ -63,10 +63,10 @@ export async function addCarts(ctx: Context) {
 	}
 }
 
-export async function deleteCarts(ctx: RContext) {
+export async function deleteCart(ctx: RContext) {
 	try {
 		const cart_id = parseInt(ctx.params.cartId)
-		await CartsClass.deleteCarts(cart_id)
+		await Carts.deleteCart(cart_id)
 		ctx.response.status = Status.NoContent
 	} catch (err) {
 		console.log(`Error : ${err}`)

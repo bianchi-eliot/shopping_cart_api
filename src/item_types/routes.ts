@@ -1,22 +1,22 @@
 import { Router } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import {
-	addItemTypes,
-	deleteItemTypes,
-	getAllItemTypes,
-	getSingleItemTypes,
-	updateItemTypes,
+	addItemType,
+	deleteItemType,
+	getItemTypes,
+	getItemType,
+	updateItemType,
 } from './controllers.ts'
 
 const router = new Router()
 
-router.get('/item-types', getAllItemTypes)
+router.get('/item-types', getItemTypes)
 
-router.get('/item-types/:itemTypeId', getSingleItemTypes)
+router.get('/item-types/:itemTypeId', getItemType)
 
-router.post('/item-types', addItemTypes)
+router.post('/item-types', addItemType)
 
-router.put('/item-types/:itemTypeId', updateItemTypes)
+router.put('/item-types/:itemTypeId', updateItemType)
 
-router.delete('/item-types/:itemTypeId', deleteItemTypes)
+router.delete('/item-types/:itemTypeId', deleteItemType)
 
 export default router

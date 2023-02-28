@@ -1,9 +1,9 @@
 import db from '../../helpers/db.ts'
-import { CartItems } from '../../types/index.ts'
+import { CartItem } from '../../types/index.ts'
 
-class CartItemsClass {
-	static async getAllCartItems(cart_id: number) {
-		const cartItems: CartItems[] = await db.query(
+class CartItems {
+	static async getCartItems(cart_id: number) {
+		const cartItems: CartItem[] = await db.query(
 			`SELECT cart_items.quantity, items.name AS item_name, items.image_url,
 				item_types.name AS item_type_name FROM cart_items
        INNER JOIN items ON cart_items.item_id = items.item_id
@@ -14,7 +14,7 @@ class CartItemsClass {
 		return cartItems
 	}
 
-	static async addCartItems(
+	static async addCartItem(
 		cart_id: number,
 		item_id: number,
 		quantity: number,
@@ -25,7 +25,7 @@ class CartItemsClass {
 		)
 	}
 
-	static async updateCartItemsQuantity(
+	static async updateCartItemQuantity(
 		cart_id: number,
 		item_id: number,
 		quantity: number,
@@ -37,14 +37,14 @@ class CartItemsClass {
 		)
 	}
 
-	static async deleteCartItems(cart_id: number, item_id: number) {
+	static async deleteCartItem(cart_id: number, item_id: number) {
 		await db.execute(
 			`DELETE FROM cart_items WHERE cart_id = ? AND item_id = ?`,
 			[cart_id, item_id],
 		)
 	}
 
-	static async deleteAllCartItems(cart_id: number) {
+	static async deleteCartItems(cart_id: number) {
 		await db.execute(
 			`DELETE FROM cart_items WHERE cart_id = ?`,
 			[cart_id],
@@ -52,4 +52,4 @@ class CartItemsClass {
 	}
 }
 
-export default CartItemsClass
+export default CartItems

@@ -1,25 +1,25 @@
 import { Router } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import {
-	addUsers,
-	deleteUsers,
-	getAllUsers,
-	getSingleUsers,
-	updateUsers,
-	updateUsersPassword,
+	addUser,
+	deleteUser,
+	getUsers,
+	getUser,
+	updateUser,
+	updateUserPassword,
 } from './controllers.ts'
 
 const router = new Router()
 
-router.get('/users', getAllUsers)
+router.get('/users', getUsers)
 
-router.get('/users/:userId', getSingleUsers)
+router.get('/users/:userId', getUser)
 
-router.post('/users', addUsers)
+router.post('/users', addUser)
 
-router.put('/users/:userId', updateUsers)
+router.put('/users/:userId', updateUser)
 
-router.patch('/users/:userId', updateUsersPassword)
+router.patch('/users/:userId', updateUserPassword)
 
-router.delete('/users/:userId', deleteUsers)
+router.delete('/users/:userId', deleteUser)
 
 export default router

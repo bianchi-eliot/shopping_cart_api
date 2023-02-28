@@ -34,6 +34,7 @@ CREATE TABLE IF NOT EXISTS item_types(
 CREATE TABLE IF NOT EXISTS items(
   item_id INT AUTO_INCREMENT,
   name VARCHAR(50),
+  price DECIMAL(6, 2),
   quantity INT,
   image_url VARCHAR(255),
   item_type_id INT,

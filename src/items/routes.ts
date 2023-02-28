@@ -1,22 +1,22 @@
 import { Router } from 'https://deno.land/x/oak@v11.1.0/mod.ts'
 import {
-	addItems,
-	deleteItems,
-	getAllItems,
-	getSingleItems,
-	updateItems,
+	addItem,
+	deleteItem,
+	getItems,
+	getItem,
+	updateItem,
 } from './controllers.ts'
 
 const router = new Router()
 
-router.get('/items', getAllItems)
+router.get('/items', getItems)
 
-router.get('/items/:itemId', getSingleItems)
+router.get('/items/:itemId', getItem)
 
-router.post('/items', addItems)
+router.post('/items', addItem)
 
-router.put('/items/:itemId', updateItems)
+router.put('/items/:itemId', updateItem)
 
-router.delete('/items/:itemId', deleteItems)
+router.delete('/items/:itemId', deleteItem)
 
 export default router

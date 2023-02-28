@@ -1,16 +1,16 @@
 import db from '../../helpers/db.ts'
-import { Users } from '../../types/index.ts'
+import { User } from '../../types/index.ts'
 
-class UsersClass {
-	static async getAllUsers() {
-		const users: Users[] = await db.query(
+class Users {
+	static async getUsers() {
+		const users: User[] = await db.query(
 			`SELECT user_id, firstname FROM users`,
 		)
 		return users
 	}
 
-	static async getSingleUsers(user_id: number) {
-		const user: Users[] = await db.query(
+	static async getUser(user_id: number) {
+		const user: User[] = await db.query(
 			`SELECT user_id, firstname, lastname, email FROM users
        WHERE user_id = ?`,
 			[user_id],
@@ -18,7 +18,7 @@ class UsersClass {
 		return user
 	}
 
-	static async addUsers(
+	static async addUser(
 		firstname: string,
 		lastname: string,
 		email: string,
@@ -32,7 +32,7 @@ class UsersClass {
 		return result
 	}
 
-	static async updateUsers(
+	static async updateUser(
 		user_id: number,
 		firstname: string,
 		lastname: string,
@@ -45,7 +45,7 @@ class UsersClass {
 		)
 	}
 
-	static async updateUsersPassword(
+	static async updateUserPassword(
 		user_id: number,
 		former_password: string,
 		new_password: string,
@@ -58,7 +58,7 @@ class UsersClass {
 		return result
 	}
 
-	static async deleteUsers(user_id: number) {
+	static async deleteUser(user_id: number) {
 		await db.execute(
 			`DELETE FROM users WHERE user_id = ?`,
 			[user_id],
@@ -66,4 +66,4 @@ class UsersClass {
 	}
 }
 
-export default UsersClass
+export default Users
